@@ -1,0 +1,15 @@
+<script src="js/index.js"></script>
+
+<div id="delmain" class="delmain">
+    <div class="fullblack"></div>
+    <div class="delroot">
+        <h2>Confirm Deletion</h2>
+        <p id="sure">
+            Are you sure you want to delete invoice <%=selectele.id%>?This action cannot be undone 
+        </p>
+        <div id="buttons">
+             <div id="cancelbut" class="cancelbut" onclick="discard()">Cancel</div>
+             <div class="delbut" onclick="deleting('<%=selectele.id%>')">Delete</div>
+        </div>
+    </div>
+</div>

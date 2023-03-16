@@ -1,0 +1,199 @@
+<script src="js/index.js"></script>
+
+<script>
+    function add()
+    {
+        let a=document.createElement("div");
+        a.setAttribute("class","lists");
+        let classlist=["nameinp","qinp","priceinp","totalinp"];
+        let idlist=["itemname","qty","price","total"];
+        let typelist=["text","number","number"];
+        let namelist=["newname","newqty","newprice"];
+        var imgpath=document.getElementById("moon").getAttribute("src");
+        for(let x=0;x<3;x++)
+        {
+            let ele=document.createElement("input");
+            ele.setAttribute("class","smallinp")
+            ele.classList.add(classlist[x]);
+            ele.setAttribute("id",idlist[x]);
+            ele.setAttribute("type",typelist[x]);
+            ele.setAttribute("name",namelist[x]);
+            if(x==1||x==2)
+            {
+                ele.setAttribute("onchange","calctotal(this)")
+            }
+            if(imgpath=="images/icon-sun.svg")
+            {
+               ele.classList.add("theme11");
+            }
+            a.appendChild(ele);
+           
+        }
+        let s=document.createElement("div");
+        s.setAttribute("id","total");
+        s.setAttribute("class","smallinp");
+        s.classList.add("totalinp");
+        if(imgpath=="images/icon-sun.svg")
+            {
+        s.classList.add("theme12")
+            }
+        a.appendChild(s);
+        let image=document.createElement("img");
+        image.setAttribute("src","images/icon-delete.svg");
+        image.setAttribute("id","dustbin");
+        
+        a.appendChild(image);
+        document.getElementById("listmenu").appendChild(a)
+    }
+   
+   
+    function calctotal(ele)
+
+    {
+        let parent=ele.parentElement.childNodes;
+        if(parent.length==11)
+        {
+     parent[7].innerText=Number(parent[3].value)*Number(parent[5].value)
+        console.log(parent)
+        }
+        else
+        {
+            parent[3].innerText=Number(parent[1].value)*Number(parent[2].value)
+        }
+        
+        
+    }
+    function hovering(ele)
+    {
+        ele.setAttribute("src","images/icon-reddelete.svg")
+    }
+    function leaving(ele)
+    {
+        ele.setAttribute("src","images/icon-delete.svg")
+    }
+    function del(ele)
+    {
+        document.getElementById("listmenu").removeChild(ele.parentElement);
+    }
+    function cancelling()
+    {
+        $(document).ready(function(){
+        $("#newmain").hide();
+         })
+    }
+    function draft(element)
+    {
+        element.value="draft";
+    }
+
+    function info()
+    {
+        $(document).ready(function(){
+        $(".delmain").show();
+         })
+    }
+</script>
+
+<div id="newmain">
+    <div id="newroot" class="newroot">
+            <div class="delmain">
+                <div class="fullblack"></div>
+                <div class="delroot">
+                    <p id="sure">
+                        New Invoice is Created!!
+                    </p>
+                    <div class="delbutton">OK</div>
+                </div>
+
+            </div>
+        
+        <div id="black1"></div>
+       <div id="edithead">
+      <h2>New Invoice</h2>
+       </div>
+       <p class="billfrom">Bill From</p>
+       <p class="commontext">Street Address</p>
+       <form action="/create" method="post">
+       
+       <input type="text" id="address" class="inp" name="fstreet"/>
+       <div class="viewadd">
+        <p class="commontext txt" >City</p>
+        <p class="commontext txt" >PostCode</p>
+        <p class="commontext txt" >Country</p>
+        <input type="text" id="city" class="smallinp" name="fcity">
+        <input type="text" id="postcode" class="smallinp"  name="fpostcode">
+        <input type="text" id="country" class="smallinp" name="fcountry">
+        
+       </div>
+       <p class="billfrom billto">Bill To</p>
+        <p class="commontext">Client's Name</p>
+        <input type="text" id="clname" class="inp" name="newclient"/>
+        <p class="commontext">Client's Email</p>
+        <input type="text" id="clname" class="inp" name="newemail"/>
+       
+        <p class="commontext">Street Address</p>
+        <input type="text" id="clname" class="inp"  name="tstreet"/>
+
+        <div class="viewadd">
+            <p class="commontext txt">City</p>
+            <p class="commontext txt">PostCode</p>
+            <p class="commontext txt">Country</p>
+            <input type="text" id="clcity" class="smallinp"  name="tcity">
+            <input type="text" id="clpostcode" class="smallinp"  name="tpostcode">
+            <input type="text" id="clcountry" class="smallinp"  name="tcountry">
+            
+           </div>
+
+           <div class="viewadd viewdate">
+            <p class="commontext datetext">Invoice Date</p>
+            <p class="commontext datetext">Payment Terms</p>
+           
+            
+            
+            <input type="date" id="indate" class="mediuminp"  onchange="changedate(this)" name="createdate"/>
+
+            
+           <select class="mediuminp" id="term"  name="paydate">
+            
+            <option class="opt" value="1" selected >Net 1 day</option>
+            <option class="opt" value="7">Net 7 days</option>
+            <option class="opt" value="14">Net 14 days</option>
+            <option class="opt" value="30">Net 30 days</option>
+           </select>
+           
+                
+        
+           </div>
+
+           <p class="commontext">Project Description</p>
+        <input type="text" id="desc" class="inp"  name="newdesc"/>
+           <h2 id="viewhead">Item List</h2>
+           <div id="listhead">
+            <p class="commontext">Item Name</p>
+            <p class="commontext">Qty.</p>
+            <p class="commontext">Price</p>
+            <p class="commontext">Total</p>
+           </div>
+
+           <div id="listmenu">
+            
+            <div class="lists">
+                <input type="text" class="smallinp nameinp" id="itemname"  name="newname">
+                <input type="number" onchange="calctotal(this)" class="smallinp qinp" id="qty"  name="newqty">
+                <input type="number" onchange="calctotal(this)" class="smallinp priceinp" id="price"  name="newprice">
+                <div class="smallinp totalinp" id="total" ></div>
+                <img src="images/icon-delete.svg" id="dustbin" onclick="del(this)" onmouseover="hovering(this)" onmouseout="leaving(this)">
+            </div>
+
+          
+           
+           </div>
+           <div id="editadd" onclick="add()" class="editadd">+ Add New Item</div>
+           <div id="newlast">
+            <div onclick="cancelling()" id="cancelling" class="cancelling">Discard</div>
+            <input type="submit" onclick="info()" id="draft" class="draft" placeholder="Save as Draft" name="newstatus" value="Save as Draft">
+            <input type="submit" value="Save & Send" id="sending" name="newstatus" class="sending" onclick="info()">
+           </div>
+       </form>
+  </div>
+</div> 

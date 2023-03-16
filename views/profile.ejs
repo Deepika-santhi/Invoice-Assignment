@@ -1,0 +1,150 @@
+<link href="css/style.css" rel="stylesheet" type="text/css"/>
+<script src="https://kit.fontawesome.com/e0738a254e.js" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="js/index.js"></script>
+<script>
+    function edit()
+    {
+        
+        $(document).ready(function(){
+        $("#editmain").show(500);
+         })
+        
+    }
+    function goback()
+    {
+        window.history.back();
+    }
+    function profiledel()
+    {
+        console.log("hi")
+        $(document).ready(function(){
+        $("#delmain").show();
+         })
+    }
+</script>
+<div id="bigbox" class="bigbox">
+    
+    <%- include('partials/navigator.ejs')%>
+    <!-- <div id="black"></div> -->
+    <%- include('partials/edit.ejs')%>
+    <%- include('partials/delete.ejs')%>
+    <div id="main">
+        
+            <div id="go">
+                <img src="images/icon-arrow-left.svg" id="left" onclick="back()">
+                <p id="goback" class="goback" onclick="goback()">Go back</p>
+                
+            </div>
+            <div id="viewtop" class="viewtop">
+                <div id="both">
+                    <p id="viewstatus" class="viewstatus">Status</p>
+
+                    <% if(selectele.status == 'paid'){ %>
+                        <p id="paid" class="stat" style="background-Color:rgba(51, 214, 159,0.1);color:#33D69F"><span id="circle"><i class="fa-solid fa-circle"></i></span><%= selectele.status%></p>
+                     <%} %>
+                     <% if(selectele.status == 'pending'){ %>
+                        <p id="paid" class="stat" style="background-Color:rgba(255, 143, 0,0.1);color:#FF8F00"><span id="circle" style="color:#FF8F00 ;"><i class="fa-solid fa-circle"></i></span><%= selectele.status%></p>
+                     <%} %>
+                     <% if(selectele.status == 'draft'){ %>
+                        <p id="paid" class="stat" style="background-Color:rgba(55, 59, 83,0.1);color:#373B53"><span id="circle" style="color:#373B53 ;"><i class="fa-solid fa-circle"></i></span><%= selectele.status%></p>
+                     <%} %>
+                    
+                </div>
+                
+                <div id="option">
+                    <div class="edit" onclick="edit()">Edit</div>
+                    <div id="del" onclick="profiledel()">Delete</div>
+                   <div id="mark" onclick="paid('<%=selectele.id%>')">Mark as paid</div></a>
+                </div>
+               
+            </div>
+
+            <div id="viewbottom" class="viewbottom">
+
+                <div id="from">
+                    <div class="viewfirst">
+                        
+                    <p id="viewheading" class="viewheading"><span class="special">#</span><%= selectele.id%></p>
+                    <p class="desc"><%= selectele.description%></p>
+                    </div>
+                    <div class="viewfirst viewone">
+                        <% var address=JSON.parse(selectele.senderAddress) %>
+                        <% var val=Object.values(address)%>
+                        <p class="add"><%= val[0] %></p>
+                        <p class="add"><%= val[1] %></p>
+                        <p class="add"><%= val[2] %></p>
+                        <p class="add"><%= val[3] %></p>
+                    </div>
+                </div>
+                <div id="addressbox">
+
+                    <div id="dates">
+                        <p class="desc">Invoice Date</p>
+                        <% var mon=selectele.paymentDue.split('-')%>
+                        <% var create=selectele.createdat.split('-')%>
+                        <% var name=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] %>
+                        <%let dat=mon[2]+" "+name[mon[1]-1]+" "+mon[0] %>
+                        <%let paydate=create[2]+" "+name[create[1]-1]+" "+create[0]%>
+                        <p class="datenum"><%= paydate %></p>
+
+                        <p class="desc">Payment Due</p>
+                       
+                       
+                        <p class="datenum"><%= dat %></p>
+
+                    </div>
+                    <div id="bill">
+                        <% var client=JSON.parse(selectele.clientAddress) %>
+                        <% let obj=Object.values(client)%>
+                        <p class="desc">Bill To</p>
+                        <p class="datenum"><%= selectele.clientName%></p>
+                        <p class="add"><%= obj[0] %></p>
+                        <p class="add"><%= obj[1] %></p>
+                        <p class="add"><%= obj[2] %></p>
+                        <p class="add"><%= obj[3] %></p>
+                    </div>
+                    <div id="send">
+                        <p class="desc">Send To</p>
+                        <p class="datenum"><%= selectele.clientEmail%></p>
+                    </div>
+                </div>
+                <div id="orderbox" class="orderbox">
+                    <div class="quantity">
+                        <p class="desc">Item Name</p>
+                        <% var ite=JSON.parse(selectele.items)%>
+                        <% for(let a=0;a<ite.length;a++){ %>
+                            <p class="info"><%= ite[a].name %></p>
+                        <%}%>
+                        
+                    </div>
+                    <div class="quantity quant">
+                        <p class="desc">QTY.</p>
+                        <% for(let a=0;a<ite.length;a++){ %>
+                            <p class="info"><%= ite[a].quantity %></p>
+                        <%}%>
+                    </div>
+                    <div class="quantity quant1">
+                        <p class="desc">Price</p>
+                        <% for(let a=0;a<ite.length;a++){ %>
+                            <p class="info"><span><i class="fa-solid fa-sterling-sign" class="sym"></i></span><%= ite[a].price %></p>
+                        <%}%>
+                    </div>
+                    <div class="quantity quant1">
+                        <p class="desc">Total</p>
+                        <% for(let a=0;a<ite.length;a++){ %>
+                            <p class="info"><span><i class="fa-solid fa-sterling-sign" class="sym"></i></span><%= ite[a].total %></p>
+                        <%}%>
+                    </div>
+                </div>
+                <div id="amountbox" class="amountbox">
+                <p id="amount">Amount Due</p>
+                <% let adding=0%>
+                <% for(let a=0;a<ite.length;a++){ %>
+                    
+                <% adding+=ite[a].total %>
+                <%}%>
+                <p id="rup"><span><i class="fa-solid fa-sterling-sign" class="sym"></i></span><%= adding%></p>
+            </div>
+    </div>
+</div>

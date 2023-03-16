@@ -1,0 +1,193 @@
+<script src="js/index.js"></script>
+<script>
+    function add()
+    {
+        
+        let a=document.createElement("div");
+        a.setAttribute("class","lists");
+        let classlist=["nameinp","qinp","priceinp","totalinp"];
+        let idlist=["itemname","qty","price","total"];
+        let typelist=["text","number","number"];
+        let namelist=["itemname","itemqty","itemprice"];
+        
+        for(let x=0;x<3;x++)
+        {
+            let ele=document.createElement("input");
+            ele.setAttribute("class","smallinp")
+            ele.classList.add(classlist[x]);
+            ele.setAttribute("id",idlist[x]);
+            ele.setAttribute("type",typelist[x]);
+            ele.setAttribute("name",namelist[x])
+            a.appendChild(ele);
+            var imgpath=document.getElementById("moon").getAttribute("src");
+    
+         if(imgpath=="images/icon-sun.svg")
+         {
+            ele.classList.add("theme11");
+         }
+           
+        }
+        let s=document.createElement("div");
+        s.setAttribute("id","total");
+        s.setAttribute("class","smallinp");
+        s.classList.add("totalinp");
+        if(imgpath=="images/icon-sun.svg")
+         {
+            s.classList.add("theme12");
+         }
+        a.appendChild(s);
+        let image=document.createElement("img");
+        image.setAttribute("src","images/icon-delete.svg");
+        image.setAttribute("id","dustbin");
+        
+        a.appendChild(image);
+        document.getElementById("listmenu").appendChild(a)
+    }
+    function cancel()
+    {
+        document.getElementById("editmain").style.display="none"
+    }
+    function changedate(ele)
+    {
+        let dateval=ele.value;
+        dateval=new Date(dateval)
+        // dateval=dateval.split("/");
+        // returndate=dateval.reverse().join("-");
+        // ele.value=returndate
+        // console.log(ele.value)
+        console.log(typeof dateval)
+    }
+    function calctotal()
+    {
+        let inpvalue=document.getElementById("price").value;
+        let qty=document.getElementById("qty").value;
+        document.getElementById("total").innerText=Number(inpvalue*qty);
+    }
+    function del(ele)
+    {
+        document.getElementById("listmenu").removeChild(ele.parentElement);
+    }
+</script>
+
+<div id="editmain" class="editmain">
+    <div id="editroot">
+        <div id="black"></div>
+       <div id="edithead">
+       <p >Edit</p>
+       <p><span class="special">#</span><%= selectele.id%></p>
+       </div>
+       <p class="billfrom">Bill From</p>
+       <p class="commontext">Street Address</p>
+       <form action="/demo" method="post">
+        <% let sender=JSON.parse(selectele.senderAddress)%>
+        <% let senderaddress=Object.values(sender)%>
+       <input type="text" id="address" class="inp" value="<%=senderaddress[0]%>" name="fromstreet"/>
+       <div class="viewadd">
+        <p class="commontext txt" >City</p>
+        <p class="commontext txt" >PostCode</p>
+        <p class="commontext txt" >Country</p>
+        <input type="text" id="city" class="smallinp" value="<%=senderaddress[1]%>" name="fromcity">
+        <input type="text" id="postcode" class="smallinp"  value="<%=senderaddress[2]%>" name="frompostcode">
+        <input type="text" id="country" class="smallinp"  value="<%=senderaddress[3]%>" name="fromcountry">
+        
+       </div>
+       <p class="billfrom billto">Bill To</p>
+        <p class="commontext">Client's Name</p>
+        <input type="text" id="clname" class="inp" value="<%= selectele.clientName%>" name="clname"/>
+        <p class="commontext">Client's Email</p>
+        <input type="text" id="clname" class="inp" value="<%= selectele.clientEmail%>" name="clemail"/>
+        <% let clientadd=JSON.parse(selectele.clientAddress)%>
+        <%let address=Object.values(clientadd)%>
+        <p class="commontext">Street Address</p>
+        <input type="text" id="clname" class="inp" value="<%=address[0]%>" name="tostreet"/>
+
+        <div class="viewadd">
+            <p class="commontext txt">City</p>
+            <p class="commontext txt">PostCode</p>
+            <p class="commontext txt">Country</p>
+            <input type="text" id="clcity" class="smallinp" value="<%=address[1]%>" name="tocity">
+            <input type="text" id="clpostcode" class="smallinp" value="<%=address[2]%>" name="topostcode">
+            <input type="text" id="clcountry" class="smallinp" value="<%=address[3]%>" name="tocountry">
+            
+           </div>
+
+           <div class="viewadd viewdate">
+            <p class="commontext datetext">Invoice Date</p>
+            <p class="commontext datetext">Payment Terms</p>
+            <%let creating=(selectele.createdat)%>
+            
+            
+            <input type="date" id="indate" class="mediuminp" value="<%=creating%>" name="indate" onchange="changedate(this)"/>
+
+            <%if(selectele.paymentTerms==1) {%>
+           <select class="mediuminp" id="term" name="terms">
+            
+            <option class="opt" value="1" selected >Net 1 day</option>
+            <option class="opt" value="7">Net 7 days</option>
+            <option class="opt" value="14">Net 14 days</option>
+            <option class="opt" value="30">Net 30 days</option>
+           </select>
+           <% }%>
+            <%if(selectele.paymentTerms==7) {%>
+                <select class="mediuminp" id="term" name="terms">
+                 
+                 <option class="opt" value="1">Net 1 day</option>
+                 <option class="opt" value="7" selected>Net 7 days</option>
+                 <option class="opt" value="14">Net 14 days</option>
+                 <option class="opt" value="30">Net 30 days</option>
+                </select>
+                <% }%>
+                 <%if(selectele.paymentTerms==14) {%>
+                    <select class="mediuminp" id="term" name="terms">
+                     
+                     <option class="opt" value="1">Net 1 day</option>
+                     <option class="opt" value="7">Net 7 days</option>
+                     <option class="opt" value="14" selected>Net 14 days</option>
+                     <option class="opt" value="30">Net 30 days</option>
+                    </select>
+                    <% }%>
+                     <%if(selectele.paymentTerms==30) {%>
+                        <select class="mediuminp" id="term" name="terms">
+                         
+                         <option class="opt" value="1">Net 1 day</option>
+                         <option class="opt" value="7">Net 7 days</option>
+                         <option class="opt" value="14">Net 14 days</option>
+                         <option class="opt" value="30" selected>Net 30 days</option>
+                        </select>
+                         <%}%>
+
+        
+           </div>
+
+           <p class="commontext">Project Description</p>
+        <input type="text" id="desc" class="inp" value="<%=selectele.description%>" name="desc"/>
+           <h2 id="viewhead">Item List</h2>
+           <div id="listhead">
+            <p class="commontext">Item Name</p>
+            <p class="commontext">Qty.</p>
+            <p class="commontext">Price</p>
+            <p class="commontext">Total</p>
+           </div>
+
+           <div id="listmenu">
+            <% let itemele=JSON.parse(selectele.items)%>
+           <% for(let a=0;a<itemele.length;a++){%>
+            <div class="lists">
+                <input type="text" class="smallinp nameinp" id="itemname" value="<%=itemele[a].name%>" name="itemname">
+                <input type="number" onchange="calctotal(this)" class="smallinp qinp" id="qty" value="<%=itemele[a].quantity%>" name="itemqty">
+                <input type="number" onchange="calctotal(this)" class="smallinp priceinp" id="price" value="<%=itemele[a].price%>" name="itemprice">
+                <div class="smallinp totalinp" id="total" value="<%=itemele[a].total%>"></div>
+                <img src="images/icon-delete.svg" id="dustbin" onclick="del(this)">
+            </div>
+
+           <%}%>
+           
+           </div>
+           <div id="editadd" onclick="add()" class="editadd">+ Add New Item</div>
+           <div id="last">
+            <div id="cancel" onclick="cancel()" class="cancel">Cancel</div>
+            <input type="submit" value="Save Changes" id="save" class="save">
+           </div>
+       </form>
+  </div>
+</div> 

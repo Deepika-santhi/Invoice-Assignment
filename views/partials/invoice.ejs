@@ -1,0 +1,50 @@
+
+<link href="css/style.css" type="text/css" rel="stylesheet"/>
+<script src="https://kit.fontawesome.com/e0738a254e.js" crossorigin="anonymous"></script>
+
+
+<%if(answer.length>0){%>
+
+
+    <% for(a=0;a < answer.length;a++){ %>
+<div id="extra">
+       <a href="profile?number=<%= count %>& changestatus=false"> <div id="small" class="small" onClick="view('<%= count %>')">
+            <p id="ID" class="ID"><span class="special">#</span><%= answer[a].id %></p> 
+            <% var month=answer[a].paymentDue.split('-')%>
+            <% var name=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'] %>
+            <%let date=month[2]+" "+name[month[1]-1]+" "+month[0] %>
+            
+            
+                <p id="date" class="date"><span id="due" class="sym">Due</span><%= date %></p>
+             <p id="name" class="name"><%= answer[a].clientName %></p>
+             <p id="rupee" class="rupee"><span><i class="fa-solid fa-sterling-sign" class="sym"></i></span><%= answer[a].total%></p>
+             <% if(answer[a].status == 'paid'){ %>
+                <p id="paid" class="stat" style="background-Color:rgba(51, 214, 159,0.1);color:#33D69F"><span id="circle"><i class="fa-solid fa-circle"></i></span><%= answer[a].status%></p>
+             <%} %>
+             <% if(answer[a].status == 'pending'){ %>
+                <p id="paid" class="stat" style="background-Color:rgba(255, 143, 0,0.1);color:#FF8F00"><span id="circle" style="color:#FF8F00 ;"><i class="fa-solid fa-circle"></i></span><%= answer[a].status%></p>
+             <%} %>
+             <% if(answer[a].status == 'draft'){ %>
+                <p id="paid" class="stat" style="background-Color:rgba(55, 59, 83,0.1);color:#373B53"><span id="circle" style="color:#373B53 ;"><i class="fa-solid fa-circle"></i></span><%= answer[a].status%></p>
+             <%} %>
+               
+
+
+             
+
+             <img src="images/icon-arrow-right.svg" id="right"/>
+        </div> 
+    </a>
+    </div>
+    <% count++ %>
+        <% } %>
+<%}else{ %>
+    <div id="emptymain">
+    <img src="images/illustration-empty.svg" id="empty"/>
+    <h1>There is nothing here</h1>
+    <p id="suggestion">Create an invoice by clicking the New Invoice button and get started</p>
+    </div>
+<%}%>
+     
+
+   

@@ -1,0 +1,45 @@
+<link href="css/style.css" rel="stylesheet" type="type/css"/>
+<script src="js/index.js"></script>
+<script>
+    function show()
+    {
+        if(document.getElementById("filterbox").style.visibility=="hidden")
+        {
+        document.getElementById("filterbox").style.visibility="visible";
+        }
+        else{
+            document.getElementById("filterbox").style.visibility="hidden";
+        }
+       
+    }
+    function createnew()
+{
+    $(document).ready(function(){
+        $("#newmain").show(400);
+         })
+}
+</script>
+<div id="top" class="top">
+    <div id="one">
+        <h1 id="head" class="head">Invoices</h1>
+        <% var len=answer.length %>
+        <p id="count" class="count">There are <%= len %> invoices</p>
+    </div>
+    <div id="two">
+        <p id="filter" class="filter">Filter by status</p>
+        <img src="images/icon-arrow-down.svg" id="down" onclick="show()">
+    </div>
+    <div id="three">
+        <div id="plus">
+            <img src="images/icon-plus.svg" id="symbol">
+
+        </div>
+        <p id="new" onclick="createnew()">New Invoice</p>
+    </div>
+
+    <div id="filterbox" class="filterbox">
+       <div class="hide"> <input type="checkbox" class="check" onclick="checking()"> <p class="tex">Paid</p></div>
+       <div class="hide"> <input type="checkbox" class="check" onclick="checking()"> <p class="tex">Pending</p></div>
+       <div class="hide"> <input type="checkbox" class="check" onclick="checking()"> <p class="tex">Draft</p></div>
+    </div>
+</div>
